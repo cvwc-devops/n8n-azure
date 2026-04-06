@@ -41,7 +41,7 @@ Create these secrets in your Key Vault before the first deployment:
 - `n8n-api-key`
 - `n8n-postgres-conn` (optional full connection string if you prefer to use it directly)
 
-n8n recommends setting a custom encryption key instead of letting it generate one locally, because that key is used to encrypt stored credentials. citeturn605913view5
+n8n recommends setting a custom encryption key instead of letting it generate one locally, because that key is used to encrypt stored credentials.
 
 ## One-time Azure setup
 
@@ -53,7 +53,7 @@ az group create -n rg-n8n-prod -l westeurope
 
 ### 2. Create Microsoft Entra app or user-assigned identity for GitHub OIDC
 
-Follow the GitHub + Azure OIDC setup to create a federated credential that trusts your GitHub repo, branch, or environment. OIDC removes the need for long-lived cloud credentials in GitHub Actions. citeturn605913view3turn605913view5
+Follow the GitHub + Azure OIDC setup to create a federated credential that trusts your GitHub repo, branch, or environment. OIDC removes the need for long-lived cloud credentials in GitHub Actions. 
 
 Minimal subject example:
 
@@ -75,7 +75,7 @@ az keyvault secret set --vault-name <your-kv-name> --name n8n-api-key --value '<
 
 ### 4. Grant the GitHub identity access to read Key Vault secrets
 
-The identity used by GitHub Actions needs rights such as **Key Vault Secrets User** on the vault to read secrets during deployment. citeturn605913view2
+The identity used by GitHub Actions needs rights such as **Key Vault Secrets User** on the vault to read secrets during deployment.
 
 ```bash
 az role assignment create \
@@ -87,7 +87,7 @@ az role assignment create \
 
 ## Runtime notes
 
-When n8n is behind a reverse proxy, set `WEBHOOK_URL` explicitly and set `N8N_PROXY_HOPS=1` so webhook URLs are correct. n8n documents both settings for reverse-proxy deployments. citeturn605913view6
+When n8n is behind a reverse proxy, set `WEBHOOK_URL` explicitly and set `N8N_PROXY_HOPS=1` so webhook URLs are correct. n8n documents both settings for reverse-proxy deployments. 
 
 ## Deployment
 
@@ -103,13 +103,13 @@ The pipeline does this:
 6. Waits for n8n to become reachable.
 7. Imports or updates any workflow JSON files in `workflows/` using the n8n API key retrieved from Key Vault.
 
-The GitHub Action retrieves Key Vault secrets with OIDC and masks them before use, matching Microsoft’s documented pattern. citeturn605913view2
+The GitHub Action retrieves Key Vault secrets with OIDC and masks them before use, matching Microsoft’s documented pattern.
 
 ## Workflow deployment strategy
 
-This repo uses the **n8n public REST API** with an API key to import workflows from JSON files. n8n documents API-key authentication for the public API. citeturn605913view1turn621265search1
+This repo uses the **n8n public REST API** with an API key to import workflows from JSON files. n8n documents API-key authentication for the public API. 
 
-For larger teams using n8n Enterprise, source-control environments are also available natively in n8n. citeturn621265search2turn621265search11
+For larger teams using n8n Enterprise, source-control environments are also available natively in n8n. 
 
 ## Files
 
@@ -120,5 +120,5 @@ For larger teams using n8n Enterprise, source-control environments are also avai
 
 ## Important caveats
 
-- The workflow import script targets the current public API shape exposed by self-hosted n8n. If your instance exposes a different path or schema, adjust the script after checking **Settings -> n8n API** and the built-in API playground. n8n provides a built-in API playground for self-hosted instances. citeturn605913view1
+- The workflow import script targets the current public API shape exposed by self-hosted n8n. If your instance exposes a different path or schema, adjust the script after checking **Settings -> n8n API** and the built-in API playground. n8n provides a built-in API playground for self-hosted instances.
 - `latest` is convenient for a starter build, but pinning to a tested n8n tag is safer for production.
