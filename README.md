@@ -171,6 +171,60 @@ az deployment group create \
 ### So, in plain English:
 main.bicep is usually the starting file that describes the Azure infrastructure you want to deploy.
 
+### main.bicep file
 
+This main.bicep is an Azure infrastructure template that deploys an n8n setup on Azure Container Apps, plus a PostgreSQL database, Log Analytics workspace, and references an existing Key Vault.
+
+### What it creates:
+
+- a Log Analytics workspace for logs
+- an Azure Container Apps managed environment
+- a PostgreSQL Flexible Server
+- a PostgreSQL database named n8n
+- a Container App that runs the n8n Docker image
+- a reference to an existing Key Vault by name
+
+### What the parameters mean:
+
+<br><br>location: Azure region<br>
+prefix: base naming prefix, default n8nprod<br>
+containerAppsEnvName, containerAppName, logAnalyticsName: derived names for resources<br>
+postgresServerName: generated PostgreSQL server name<br>
+postgresDbName: defaults to n8n<br>
+postgresAdminUser: defaults to n8nadmin<br>
+postgresAdminPassword: secure parameter, must be supplied<br>
+keyVaultName: required existing Key Vault name<br>
+n8nHost: optional hostname, but it is not actually used anywhere else in this file<br>
+
+### How the app is configured:
+
+<br><br>The Container App runs docker.n8n.io/n8nio/n8n:latest<br>
+It exposes port 5678<br>
+It uses PostgreSQL as the backend database<br>
+It enables basic auth<br>
+It forces HTTPS-related settings like N8N_PROTOCOL=https<br>
+It is fixed at 1 replica minimum and 1 replica maximum<br>
+
+### A few important things I notice:
+
+<br><br>Database password is not wired into the container app. The app sets host, port, DB name, and DB user, but I do not see DB_POSTGRESDB_PASSWORD in the container environment variables. As written, n8n likely will not be able to connect to PostgreSQL successfully.<br>
+Key Vault is only referenced, not used. The template outputs the Key Vault ID, but it does not store secrets there or pull secrets from it.<br>
+n8nHost is unused. It is declared as a parameter, but nothing in the deployment applies it to ingress, custom domains, or env vars.<br>
+PostgreSQL public network access is enabled. That is simpler to get running, but less locked down.
+It uses n8n:latest, which is convenient but less predictable for production because upgrades can change behavior unexpectedly.
+
+### Outputs you get after deployment:
+
+- container app name
+- container app FQDN
+- container app managed identity principal ID
+- Key Vault ID
+- PostgreSQL FQDN
+- PostgreSQL login username
+- database name
+
+In plain English: this file is trying to stand up a basic production-style n8n environment on Azure, but it looks incomplete because the app is missing the PostgreSQL password configuration.
+<br><br>
+The biggest fix is usually to add a secret and reference it from the container app, for example by adding a container app secret and then setting DB_POSTGRESDB_PASSWORD from that secret.
 
 
