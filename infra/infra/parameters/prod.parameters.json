@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "westeurope"
+    },
+    "prefix": {
+      "value": "n8nprod"
+    },
+    "logAnalyticsName": {
+      "value": "n8nprod-law"
+    },
+    "containerAppsEnvName": {
+      "value": "n8nprod-cae"
+    },
+    "containerAppName": {
+      "value": "n8nprod-app"
+    },
+    "vnetName": {
+      "value": "n8nprod-vnet"
+    },
+    "postgresServerName": {
+      "value": "n8nprodpg001"
+    },
+    "keyVaultName": {
+      "value": "kv-n8n-prod-001"
+    },
+    "postgresAdminPasswordSecretUri": {
+      "value": "https://kv-n8n-prod-001.vault.azure.net/secrets/postgres-admin-password/REPLACE_WITH_VERSION"
+    },
+    "n8nBasicAuthUserSecretUri": {
+      "value": "https://kv-n8n-prod-001.vault.azure.net/secrets/n8n-basic-auth-user/REPLACE_WITH_VERSION"
+    },
+    "n8nBasicAuthPasswordSecretUri": {
+      "value": "https://kv-n8n-prod-001.vault.azure.net/secrets/n8n-basic-auth-password/REPLACE_WITH_VERSION"
+    },
+    "n8nHost": {
+      "value": "n8n.example.com"
+    },
+    "minReplicas": {
+      "value": 2
+    },
+    "maxReplicas": {
+      "value": 3
+    }
+  }
+}
