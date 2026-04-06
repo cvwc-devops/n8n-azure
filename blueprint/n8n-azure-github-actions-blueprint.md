@@ -220,7 +220,7 @@ output sharedKey string = listKeys(workspace.id, '2026-06-01').primarySharedKey
 param name string
 param location string
 
-resource acr 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
+resource acr 'Microsoft.ContainerRegistry/registries@2026-06-01' = {
   name: name
   location: location
   sku: {
@@ -247,7 +247,7 @@ param logAnalyticsCustomerId string
 @secure()
 param logAnalyticsSharedKey string
 
-resource env 'Microsoft.App/managedEnvironments@2025-07-01' = {
+resource env 'Microsoft.App/managedEnvironments@2026-06-01' = {
   name: name
   location: location
   properties: {
@@ -276,7 +276,7 @@ param adminUser string
 param adminPassword string
 param databaseName string
 
-resource server 'Microsoft.DBforPostgreSQL/flexibleServers@2025-08-01' = {
+resource server 'Microsoft.DBforPostgreSQL/flexibleServers@2026-06-01' = {
   name: name
   location: location
   sku: {
@@ -303,7 +303,7 @@ resource server 'Microsoft.DBforPostgreSQL/flexibleServers@2025-08-01' = {
   }
 }
 
-resource db 'Microsoft.DBforPostgreSQL/flexibleServers/databases@2025-08-01' = {
+resource db 'Microsoft.DBforPostgreSQL/flexibleServers/databases@2026-06-01' = {
   parent: server
   name: databaseName
   properties: {
@@ -337,7 +337,7 @@ param dbPassword string
 var noProtoUrl = replace(replace(n8nPublicUrl, 'https://', ''), 'http://', '')
 var hostOnly = contains(noProtoUrl, '/') ? split(noProtoUrl, '/')[0] : noProtoUrl
 
-resource app 'Microsoft.App/containerApps@2025-07-01' = {
+resource app 'Microsoft.App/containerApps@2026-06-01' = {
   name: name
   location: location
   identity: {
