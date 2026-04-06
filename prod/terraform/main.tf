@@ -149,6 +149,13 @@ resource "azurerm_redis_cache" "redis" {
   tags                = var.tags
 }
 
+resource "n8n_workflow" "example" {
+  name   = "example-workflow"
+  active = false
+  nodes  = file("${path.module}/workflows/example.nodes.json")
+  connections = file("${path.module}/workflows/example.connections.json")
+}
+
 locals {
   public_host     = var.frontdoor_custom_domain != "" ? var.frontdoor_custom_domain : azurerm_cdn_frontdoor_endpoint.fd_endpoint.host_name
   webhook_base    = var.webhook_base_url != "" ? var.webhook_base_url : "https://${local.public_host}"
