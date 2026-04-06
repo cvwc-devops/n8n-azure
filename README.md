@@ -122,3 +122,55 @@ For larger teams using n8n Enterprise, source-control environments are also avai
 
 - The workflow import script targets the current public API shape exposed by self-hosted n8n. If your instance exposes a different path or schema, adjust the script after checking **Settings -> n8n API** and the built-in API playground. n8n provides a built-in API playground for self-hosted instances.
 - `latest` is convenient for a starter build, but pinning to a tested n8n tag is safer for production.
+
+## bicep file
+
+Bicep is Microsoft’s language for defining Azure resources in a simpler way than raw ARM JSON. A file named main.bicep commonly acts as the entry point for a deployment.
+
+### What it usually does:
+
+defines Azure resources directly, or
+calls other smaller .bicep modules, or
+wires parameters, variables, and outputs together
+
+### A typical main.bicep might include:
+
+parameters like location, app name, SKU
+resources like storage accounts, VNets, app services
+modules like network.bicep, app.bicep, database.bicep
+outputs such as resource IDs or endpoints
+
+### Example:
+
+param location string = resourceGroup().location
+param storageName string
+
+resource stg 'Microsoft.Storage/storageAccounts@2023-01-01' = {
+  name: storageName
+  location: location
+  sku: {
+    name: 'Standard_LRS'
+  }
+  kind: 'StorageV2'
+}
+
+output storageId string = stg.id
+
+In practice, main.bicep often means:
+
+top-level deployment file
+the one you run with Azure CLI or PowerShell
+the file that coordinates the rest of the infrastructure code
+
+### Example deploy command:
+
+az deployment group create \
+  --resource-group my-rg \
+  --template-file main.bicep
+
+### So, in plain English:
+main.bicep is usually the starting file that describes the Azure infrastructure you want to deploy.
+
+
+
+
