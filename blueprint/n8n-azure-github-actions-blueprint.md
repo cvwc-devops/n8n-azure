@@ -197,7 +197,7 @@ output postgresDb string = postgresDbName
 param name string
 param location string
 
-resource workspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
+resource workspace 'Microsoft.OperationalInsights/workspaces@2026-06-01' = {
   name: name
   location: location
   properties: {
@@ -209,7 +209,7 @@ resource workspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
 }
 
 output customerId string = workspace.properties.customerId
-output sharedKey string = listKeys(workspace.id, '2023-09-01').primarySharedKey
+output sharedKey string = listKeys(workspace.id, '2026-06-01').primarySharedKey
 ```
 
 ---
