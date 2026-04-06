@@ -21,3 +21,8 @@ provider "azurerm" {
 }
 
 provider "azapi" {}
+
+provider "n8n" {
+  base_url = var.n8n_base_url
+  api_key  = var.n8n_api_key
+}
