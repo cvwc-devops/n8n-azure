@@ -28,7 +28,7 @@ Add these in **GitHub -> Settings -> Secrets and variables -> Actions**:
 - `AZURE_SUBSCRIPTION_ID`
 - `AZURE_KEYVAULT_NAME`
 
-These are used only for Azure OIDC login and Key Vault lookup. This avoids storing Azure passwords in GitHub. GitHub recommends OIDC for Azure authentication, and Microsoft documents the same pattern. citeturn605913view3turn605913view2
+These are used only for Azure OIDC login and Key Vault lookup. This avoids storing Azure passwords in GitHub. GitHub recommends OIDC for Azure authentication, and Microsoft documents the same pattern. 
 
 ## Required Key Vault secrets
 
